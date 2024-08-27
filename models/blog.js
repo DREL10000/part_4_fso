@@ -11,5 +11,7 @@ const blogSchema = new mongoose.Schema({
   
   const mongoUrl = config.MONGODB_URI;
   mongoose.connect(mongoUrl)
+  .then((res)=> console.log('connected to db successfully'))
+  .catch((e) => console.log('error connecting to db'))
 
 module.exports = mongoose.model('Blog', blogSchema)
