@@ -51,6 +51,25 @@ test('the unique identifier property of the blog posts is not named _id', async 
     assert(obj_keys.includes('id'), false)
 })
 
+test('successfully creates a new blog post', async () => {
+    const newblog = {
+        title: "This is the test blog",
+        author: "Andrel Daga",
+        url: "https://reactpatterns.com/",
+        likes: 50000,
+    }
+    await api
+    .post('/api/blogs')
+    .send(newblog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+    const response = await api.get('/api/blogs')
+    const titles = response.body.map((r) => r.title)
+
+    assert.strictEqual(response.body.length, initialBlogs.length + 1)
+    assert(titles.includes('This is the test blog'))
+})
 
 after(async () => {
     await mongoose.connection.close()
