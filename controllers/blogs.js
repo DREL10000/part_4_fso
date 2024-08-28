@@ -8,9 +8,16 @@ blogsRouter.get('/', async (request, response) => {
 
 blogsRouter.post('/', async (request, response) => {
   const obj_keys = Object.keys(request.body)
-  const blog = obj_keys.includes('likes') ? new Blog(request.body): new Blog({...request.body, likes: 0})
-  const savedBlog = await blog.save()
-  response.status(201).json(savedBlog)
+  if(!obj_keys.includes('title') || !obj_keys.includes('url'))
+  {
+    response.status(400).end()
+  }
+  else
+  {
+    const blog = obj_keys.includes('likes') ? new Blog(request.body): new Blog({...request.body, likes: 0})
+    const savedBlog = await blog.save()
+    response.status(201).json(savedBlog)
+  }
 })
 
 module.exports = blogsRouter
