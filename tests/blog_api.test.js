@@ -39,6 +39,19 @@ test('there are two notes', async () => {
     assert.strictEqual(response.body.length, initialBlogs.length)
 })
 
+test('the unique identifier property of the blog posts is named id', async () => {
+    const response = await api.get('/api/blogs')
+    const obj_keys = Object.keys(response.body[0])
+    assert(obj_keys.includes('id'))
+})
+
+test('the unique identifier property of the blog posts is not named _id', async () => {
+    const response = await api.get('/api/blogs')
+    const obj_keys = Object.keys(response.body[0])
+    assert(obj_keys.includes('id'), false)
+})
+
+
 after(async () => {
     await mongoose.connection.close()
 })
