@@ -114,6 +114,23 @@ test('deleted a specified blog post', async () => {
     assert.strictEqual(response.body.length, initialBlogs.length - 1)
 })
 
+test('updated the property of a specified blog post', async () => {
+    const updatedBlog = {
+        title: 'To test the put endpoint',
+        author: "Andrel Daga",
+        url: "https://reactpatterns.com/",
+    }
+
+    await api
+    .put('/api/blogs/5a422aa71b54a676234d17f8')
+    .send(updatedBlog)
+    .expect(200)
+
+    const response = await api.get('/api/blogs')
+    const titles = response.body.map(b => b.title)
+    assert(titles.includes(updatedBlog.title))
+})
+
 after(async () => {
     await mongoose.connection.close()
 })

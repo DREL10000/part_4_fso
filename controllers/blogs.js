@@ -8,13 +8,11 @@ blogsRouter.get('/', async (request, response) => {
 
 blogsRouter.post('/', async (request, response) => {
   const obj_keys = Object.keys(request.body)
-  if(!obj_keys.includes('title') || !obj_keys.includes('url'))
-  {
+  if (!obj_keys.includes('title') || !obj_keys.includes('url')) {
     response.status(400).end()
   }
-  else
-  {
-    const blog = obj_keys.includes('likes') ? new Blog(request.body): new Blog({...request.body, likes: 0})
+  else {
+    const blog = obj_keys.includes('likes') ? new Blog(request.body) : new Blog({ ...request.body, likes: 0 })
     const savedBlog = await blog.save()
     response.status(201).json(savedBlog)
   }
@@ -23,6 +21,13 @@ blogsRouter.post('/', async (request, response) => {
 blogsRouter.delete('/:id', async (request, response) => {
   await Blog.findByIdAndDelete(request.params.id)
   response.status(204).end()
+})
+
+blogsRouter.put('/:id', async (request, response) => {
+  const { title, author, url, likes } = request.body
+
+  await Blog.findByIdAndUpdate(request.params.id, { title, author, url, likes }, { new: true, runValidators: true, context: 'query' })
+  response.json(200)
 })
 
 module.exports = blogsRouter
