@@ -1,9 +1,10 @@
 POST http://localhost:3003/api/blogs 
 Content-Type: application/json 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkRERCIsImlkIjoiNjZkNmQ4MzNkOWFhZWRkMWE2ZGUwMTAxIiwiaWF0IjoxNzI1NDM3OTI0fQ.OHWwKTgUIQqamyK_WIlzGawJEtT119zfxSt2n2TQ2h8
 
 {
-    "title": "fifth blog post",
-    "author": "Andrel Daga",
-    "url": "https://www.andreldaga.com/first-post",
-    "likes": 2000
+    "title": "D's second blog post",
+    "author": "D",
+    "url": "https://www.andreldaga.com/sixth-post",
+    "user": "66d6d833d9aaedd1a6de0101"
 }
